@@ -2,7 +2,7 @@
 
 Self-contained static PS4 host. Upload the contents of this directory to the root
 of omarcenter/omarcenter.github.io (main branch). Pages: main / root.
-Launch stays on the same origin at host/index.html. No iframe or external loader.
+Launch stays in the portal through a same-origin visible iframe. Loader navigation stays inside it. No external loader redirects.
 The package includes the selected upstream scripts, patch files, and payload.
 
 Upstream: https://github.com/GamerHack/GamerHack.github.io
@@ -20,3 +20,13 @@ Validation: static dependency and manifest resolution, firmware routing with
 stubbed DOM (no exploit execution), ZIP integrity. Not tested on actual PS4.
 Hardware operation and offline-cache behavior still require a console test.
 Do not update console firmware to match this site.
+
+## 2026-11-03 integration
+
+14.00 uses host/ps4-14 from well0nez/afterglow-web at b16964133d47f838817980b7c0c5f35e1f1b6208.
+Only exact 14.00 is routed there; the older firmware routes are preserved.
+The landing page is localized and waits for AppCache, then launches GoldHEN in the embedded frame.
+Kernel scripts, firmware offsets and binary payloads remain byte-identical to upstream.
+UPSTREAM.json records provenance and original SHA256 values.
+GitHub Pages controls HTTP headers; the versioned manifest must be bumped when files change.
+Hardware launch, stability, and offline browser behavior require a real PS4 test.
