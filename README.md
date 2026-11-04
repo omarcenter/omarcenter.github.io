@@ -30,3 +30,11 @@ Kernel scripts, firmware offsets and binary payloads remain byte-identical to up
 UPSTREAM.json records provenance and original SHA256 values.
 GitHub Pages controls HTTP headers; the versioned manifest must be bumped when files change.
 Hardware launch, stability, and offline browser behavior require a real PS4 test.
+
+## Unified PS4 offline cache (2026-11-04)
+The portal and all PS4 runner HTML pages share /offline.appcache. The cache includes
+the root URL, index.html, artwork, local modules, workers, exact query variants and
+payloads. No PS5 files are included. A complete initial online download is required.
+The portal reports actual AppCache progress and blocks launch during cache checks,
+downloads and pending updates. New cached versions require reloading before launch.
+Bump offline.appcache when any cached file changes. Console testing remains required.

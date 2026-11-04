@@ -23,6 +23,8 @@
     if (!inRange(fw) || !inList(listed,fw)) return null;
     return {name:'GoldHEN · '+fw,status:'ملفات داخل موقع عمر سنتر',url:'host/index.html',detail:'يبدأ التشغيل داخل هذه الواجهة. اتبع تعليمات حفظ الملفات وراجع نتيجة الأداة.'};
   }
+  function cacheBlocked() { return window.OmarOffline && window.OmarOffline.blocked(); }
+  window.addEventListener('omar-cache-change',function(){ render(); });
   function render() {
     var fw = firmware || (!isPS4 ? preview : null);
     var outsideRange = fw && !inRange(fw);
@@ -31,17 +33,18 @@
     text('route-title', selected ? selected.name : (outsideRange ? 'خارج نطاق الموقع' : 'الإصدار غير مدرج'));
     text('route-status', selected ? selected.status : 'التشغيل غير متاح');
     text('route-detail', selected ? selected.detail : (outsideRange ? 'هذه الواجهة مخصصة للإصدارات المدرجة من 9.00 إلى 14.00 فقط. لن يبدأ التشغيل على هذا الإصدار.' : 'لا يوجد رابط تشغيل مُعد لهذا الإصدار، حتى لو كان ضمن النطاق. راجع رقم النظام؛ لا تختَر إصدارًا مختلفًا عنه.'));
-    el('launch').disabled = !isPS4 || !selected || !firmware || launching;
-    text('launch-label', !isPS4 ? 'افتح من متصفح PS4 للتشغيل' : (!selected ? 'الإصدار غير مدرج' : (launching ? 'التشغيل جارٍ…' : 'تشغيل GoldHEN')));
+    el('launch').disabled = !isPS4 || !selected || !firmware || launching || cacheBlocked();
+    text('launch-label', !isPS4 ? 'افتح من متصفح PS4 للتشغيل' : (!selected ? 'الإصدار غير مدرج' : (launching ? 'التشغيل جارٍ…' : (cacheBlocked() ? 'انتظر اكتمال حفظ الموقع…' : 'تشغيل GoldHEN'))));
     text('launch-caption', selected ? 'التشغيل داخل الواجهة نفسها، دون تحويل إلى موقع آخر.' : 'لن تبدأ طريقة غير مطابقة للإصدار.');
   }
   el('preview-firmware').addEventListener('change', function () { preview = this.value; render(); });
   el('launch').addEventListener('click', function () {
-    if (launching || !isPS4 || !firmware) return;
+    if (launching || !isPS4 || !firmware || cacheBlocked()) return;
     var target = routeFor(firmware);
     if (!target) return;
 
     launching = true;
+    if (window.OmarOffline) window.OmarOffline.begin();
     render();
     text('action-message','جارٍ فتح ملفات التشغيل داخل موقع عمر سنتر…');
     el('run-panel').hidden = false;
