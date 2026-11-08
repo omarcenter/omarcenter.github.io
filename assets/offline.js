@@ -1,4 +1,4 @@
-/* Omar Center PS4 portal AppCache, 2026-11-04. */
+/* Omar Center PS4 portal AppCache, 2026-11-08. */
 (function () {
   'use strict';
   var ac = window.applicationCache;
@@ -11,7 +11,9 @@
     var event = document.createEvent('Event'); event.initEvent('omar-cache-change', false, false); window.dispatchEvent(event);
   }
   window.OmarOffline = {
-    blocked: function () { return pending || busy() || (!!ac && ac.status === 4); },
+    blocked: function () { if (ac && ac.status === 4) return true;
+      if (navigator.onLine === false) return !ac || ac.status !== 1;
+      return pending || busy(); },
     begin: function () { running = true; reload.hidden = true; }
   };
   reload.addEventListener('click',function(){if(!running)location.reload();});
@@ -38,6 +40,8 @@
   ac.addEventListener('updateready',updated);
   ac.addEventListener('error',failed);
   ac.addEventListener('obsolete',failed);
+  window.addEventListener('offline',function(){if(ac.status===1)ready();else changed('الاتصال مقطوع؛ انتظر نتيجة الكاش أو أعد الاتصال لإكمال الحفظ.');});
+  window.addEventListener('online',function(){changed('عاد الاتصال؛ افحص حالة الحفظ قبل التشغيل.');});
   if (ac.status === 1) ready();
   else if (ac.status === 4) updated();
 })();
