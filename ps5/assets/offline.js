@@ -2,7 +2,34 @@
 var box=document.getElementById('offline-status'),reload=document.getElementById('offline-reload'),ac;
 function say(s){box.textContent=s;}
 try{ac=window.applicationCache;}catch(e){}
-if(!ac){say('هذا المتصفح لا يدعم حفظ AppCache؛ التشغيل بدون إنترنت غير مفعّل عليه.');return;}
+if(!ac){
+  if(!navigator.serviceWorker){
+    say('هذا المتصفح لا يدعم حفظ ملفات الموقع للأوفلاين.');
+    return;
+  }
+  function workerReady(){
+    window.omarOfflineBusy=false;
+    say('اكتمل حفظ ملفات الموقع. اختبر التشغيل بعد فصل الإنترنت وإعادة تشغيل الجهاز.');
+  }
+  function workerFailed(){
+    window.omarOfflineBusy=false;
+    say('تعذّر حفظ ملفات الموقع. أعد فتح الصفحة والإنترنت متصل.');
+  }
+  if(navigator.serviceWorker.controller)workerReady();
+  if(!navigator.serviceWorker.controller){
+    window.omarOfflineBusy=true;
+    say('جارٍ حفظ ملفات التشغيل؛ أبقِ الإنترنت متصلاً.');
+  }
+  navigator.serviceWorker.addEventListener('controllerchange',workerReady);
+  navigator.serviceWorker.register('sw.js').then(function(registration){
+    var worker=registration.installing || registration.waiting;
+    if(!worker)return;
+    function check(){if(worker.state==='redundant' && !navigator.serviceWorker.controller)workerFailed();}
+    worker.addEventListener('statechange',check);
+    check();
+  }).catch(workerFailed);
+  return;
+}
 window.omarOfflineBusy=false;
 function ready(){window.omarOfflineBusy=false;say('اكتمل حفظ ملفات الموقع في هذا المتصفح. جرّب إعادة فتح نفس الرابط بدون إنترنت للتأكد على جهازك.');}
 function updateReady(){window.omarOfflineBusy=true;say('اكتمل تنزيل نسخة جديدة. اضغط الزر لتفعيلها قبل التشغيل.');reload.hidden=false;}
