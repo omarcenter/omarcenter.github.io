@@ -4,10 +4,10 @@
   var found = /PlayStation\s+4[\/ ](\d+)\.(\d{1,2})(?!\d)/i.exec(ua);
   var firmware = found ? String(parseInt(found[1], 10)) + '.' + (found[2].length === 1 ? '0' : '') + found[2] : null;
   var isPS4 = /PlayStation\s+4/i.test(ua);
-  var preview = '14.00';
+  var preview = '14.02';
   var selected = null;
   var launching = false;
-  var afterglowFirmwares = ["12.00", "12.02", "12.50", "12.52", "13.00", "13.02", "13.04", "13.50", "13.52", "14.00"];
+  var afterglowFirmwares = ["12.00", "12.02", "12.50", "12.52", "13.00", "13.02", "13.04", "13.50", "13.52", "14.00", "14.02"];
   var method = 'auto';
   var goldenFirmwares = ['9.00','9.03','9.04','9.50','9.51','9.60','10.00','10.01','10.50','10.70','10.71','11.00','11.02','11.50','11.52','12.00','12.02','12.50','12.52','13.00'];
   function el(id) { return document.getElementById(id); }
@@ -17,10 +17,10 @@
     if (typeof fw !== 'string' || !/^\d+\.\d{2}$/.test(fw)) return false;
     var parts = fw.split('.');
     var version = parseInt(parts[0], 10) * 100 + parseInt(parts[1], 10);
-    return version >= 900 && version <= 1400;
+    return version >= 900 && version <= 1402;
   }
   function routeFor(fw) {
-    if (fw === '14.00' || (method === 'afterglow' && inList(afterglowFirmwares, fw))) return {name:'Afterglow · '+fw,status:'موثّق لدى المطوّر — يحتاج اختبار جهازك',url:'host/ps4-14/index.html',detail:'تشغيل Afterglow داخل الواجهة. انتظر رسالة الأداة؛ يحتاج هذا المسار اختباراً على الجهاز.'};
+    if (fw === '14.00' || fw === '14.02' || (method === 'afterglow' && inList(afterglowFirmwares, fw))) return {name:'Afterglow · '+fw,status:'موثّق لدى المطوّر — يحتاج اختبار جهازك',url:'host/ps4-14/index.html',detail:'تشغيل Afterglow مع GoldHEN 2.4b18.14 داخل الواجهة. انتظر رسالة الأداة؛ يحتاج هذا المسار اختباراً على الجهاز.'};
     var listed = ["9.00", "9.03", "9.04", "9.50", "9.51", "9.60", "10.00", "10.01", "10.50", "10.70", "10.71", "11.00", "11.02", "11.50", "11.52", "12.00", "12.02", "12.50", "12.52", "13.00", "13.02", "13.04", "13.50", "13.52"];
     if (!inRange(fw) || !inList(listed,fw)) return null;
     return {name:'GoldHEN · '+fw,status:'ملفات داخل موقع عمر سنتر',url:'host/index.html',detail:'يبدأ التشغيل داخل هذه الواجهة. اتبع تعليمات حفظ الملفات وراجع نتيجة الأداة.'};
@@ -32,10 +32,10 @@
     var outsideRange = fw && !inRange(fw);
     selected = routeFor(fw);
     el('desktop-preview').hidden = isPS4;
-    el('method-choice').hidden = !inList(afterglowFirmwares,fw) || fw === '14.00';
+    el('method-choice').hidden = !inList(afterglowFirmwares,fw) || fw === '14.00' || fw === '14.02';
     text('route-title', selected ? selected.name : (outsideRange ? 'خارج نطاق الموقع' : 'الإصدار غير مدرج'));
     text('route-status', selected ? selected.status : 'التشغيل غير متاح');
-    text('route-detail', selected ? selected.detail : (outsideRange ? 'هذه الواجهة مخصصة للإصدارات المدرجة من 9.00 إلى 14.00 فقط. لن يبدأ التشغيل على هذا الإصدار.' : 'لا يوجد رابط تشغيل مُعد لهذا الإصدار، حتى لو كان ضمن النطاق. راجع رقم النظام؛ لا تختَر إصدارًا مختلفًا عنه.'));
+    text('route-detail', selected ? selected.detail : (outsideRange ? 'هذه الواجهة مخصصة للإصدارات المدرجة من 9.00 إلى 14.02 فقط. لن يبدأ التشغيل على هذا الإصدار.' : 'لا يوجد رابط تشغيل مُعد لهذا الإصدار، حتى لو كان ضمن النطاق. راجع رقم النظام؛ لا تختَر إصدارًا مختلفًا عنه.'));
     el('launch').disabled = !isPS4 || !selected || !firmware || launching || cacheBlocked();
     text('launch-label', !isPS4 ? 'افتح من متصفح PS4 للتشغيل' : (!selected ? 'الإصدار غير مدرج' : (launching ? 'التشغيل جارٍ…' : (cacheBlocked() ? 'انتظر اكتمال حفظ الموقع…' : 'تشغيل GoldHEN'))));
     text('launch-caption', selected ? 'التشغيل داخل الواجهة نفسها، دون تحويل إلى موقع آخر.' : 'لن تبدأ طريقة غير مطابقة للإصدار.');

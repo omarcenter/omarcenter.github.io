@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Omar Center PS4 unified offline 2026-11-08-v2
+# Omar Center PS4 unified offline 2026-11-16-v1
 
 CACHE:
 /
@@ -84,6 +84,7 @@ CACHE:
 /host/ps4-14/meme.png
 /host/ps4-14/patchset-1352.bin
 /host/ps4-14/patchset-1400.bin
+/host/ps4-14/patchset-1402.bin
 /host/ps4-14/ps4_offsets.js
 /host/ps4-14/style.css
 /host/raw13g/UPSTREAM.json

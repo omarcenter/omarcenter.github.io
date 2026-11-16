@@ -38,3 +38,11 @@ payloads. No PS5 files are included. A complete initial online download is requi
 The portal reports actual AppCache progress and blocks launch during cache checks,
 downloads and pending updates. New cached versions require reloading before launch.
 Bump offline.appcache when any cached file changes. Console testing remains required.
+
+## Current PS4 integration — 2026-11-16
+Afterglow is pinned to 587c00a564c4765b78ab413e400a392efdd9a780. Exact
+14.00 and 14.02 use it by default. Optional Afterglow routes remain available for
+12.00, 12.02, 12.50, 12.52, 13.00, 13.02, 13.04, 13.50 and 13.52.
+The Afterglow path includes GoldHEN 2.4b18.14 and matching upstream binaries;
+older default routes keep their original payloads. This supersedes the earlier
+14.00-only integration notes. See UPDATE-2026-11-16.md for cache and test limits.

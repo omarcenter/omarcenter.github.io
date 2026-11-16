@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/well0nez/afterglow-web",
-  "commit": "65a8480643e967535c45e44ae1f19c1ff2dd628c",
-  "integrated": "2026-11-08",
+  "commit": "587c00a564c4765b78ab413e400a392efdd9a780",
+  "integrated": "2026-11-16",
   "firmware_route": [
     "12.00",
     "12.02",
@@ -12,23 +12,25 @@
     "13.04",
     "13.50",
     "13.52",
-    "14.00"
+    "14.00",
+    "14.02"
   ],
   "hardware_tested": false,
   "upstream_hardware_tests": true,
   "changes": [
-    "Arabic same-origin embedded landing; exact firmware allowlist",
-    "Existing routes preserved; Afterglow optional except 14.00",
-    "Unified offline manifest with query fallback; no timed cache bypass"
+    "Arabic same-origin embedded landing; exact eleven-firmware Afterglow allowlist",
+    "Existing routes preserved; Afterglow default for 14.00 and 14.02, optional for listed 12.xx/13.xx",
+    "Unified offline manifest with query fallback; no timed cache bypass",
+    "Pending AppCache update swaps and reloads before launch, with reload loop guard"
   ],
   "sha256": {
-    "afterglow.js": "3c2bb25dd6efe77bd5705879ee88cf6f8f03df395270044c044fb14509151e88",
-    "core.js": "2ffe78fad4acf8ec9d8b06fcc9f99f49aff3c92feb352504d3520e545ade68ea",
-    "jb.js": "9a1e0f46fb4ed8f49a8bc8a8969193dd07574eb941112bcccc6ddf4ae921e0a9",
-    "ps4_offsets.js": "1c9085075929a1f053b98d554904e0683c5aa345ea1ce2f5a3e652c1892e4f1a",
-    "README.md": "fea4318cf44b346963be57d4c8af5f7ce8a2cc6bd7a2a7aafa738f82a3849ae3",
+    "afterglow.js": "550a60485113a8b14def5ef856786b0b3b709d0322072ae5ad36be934759b74e",
+    "core.js": "ca9f4676176f50bd46320bc7fc815c16e8f4c13289b00ac4a34b31e8d0301e8d",
+    "jb.js": "b3e99d1dc5b6eee7f8a1a26a8d24a9a38abb442f0743f32b9fdec46f85410693",
+    "ps4_offsets.js": "ed375f3bcd2a1807aecbbf6d2c0d7f8a83a43164e6e32895ddd12e739a8cebe2",
+    "README.md": "2deb19afc55137596c9723959e9d4d2ccfc9b4a25206a155228ba76a29116836",
     "TECHNICAL.md": "f77d1f564ee13894c4277400ef0f346fe96dd870d12c993bbf7ec00e4aabc673",
-    "make-manifest.sh": "fe84e6fcf756eb277241007bd1b01a86a3df605f1f04f4d433c9907837542d27",
+    "make-manifest.sh": "4717a7abd7f65dad32543e982b9ab532bb82f68a79f1a18927d8d3077c47312a",
     "patchset-1200.bin": "06f287712759bfb24f44ba54a0b13326bfd02e69f90f3d45f8d57c6e897e46cd",
     "patchset-1202.bin": "06f287712759bfb24f44ba54a0b13326bfd02e69f90f3d45f8d57c6e897e46cd",
     "patchset-1250.bin": "2807a61641eec265e74a50ca053f35a128704c2195850c53b549b3057348c125",
@@ -38,6 +40,10 @@
     "patchset-1304.bin": "a92beb75ad78986b39cc27e53d6d69a60b2a09f13c16937d292f314644052cf9",
     "patchset-1350.bin": "6f60cedb25810886b96227b3e3c2d2b528eda7b0e95aa2667a88baefcdb6f829",
     "patchset-1352.bin": "adfb9771904f71cd1f5a82cbded8ac46c7ffeb3df974579535cf711904ac347e",
-    "patchset-1400.bin": "615f275b96831cc04173757db39e93f0d27b52888976af2a6444604aa8ac5dbf"
-  }
+    "patchset-1400.bin": "615f275b96831cc04173757db39e93f0d27b52888976af2a6444604aa8ac5dbf",
+    "patchset-1402.bin": "df2145f21ecb8322fd2b062f7f0b8cacca75c96205bc34d96f2d7198bfce9cd3",
+    "goldhen.bin": "c5480587d99efc2e3cc132352d9b7cf052dd3068280f1686e7fbb37d57e9ba8b",
+    "hen.bin": "420f5cfd72ec401f02beaaf3ddbe63b21c2ba1696904810044220e8d5f7cb5a2"
+  },
+  "goldhen_version": "2.4b18.14"
 }
